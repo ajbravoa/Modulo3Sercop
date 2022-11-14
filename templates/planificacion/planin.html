@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <center>
+        <h1>PLANIFICACION DE ESTUDIO</h1>
+
+    </center>
+
+    <form method="post" action="/GrabarPlanificacion">
+      {% csrf_token %}
+        <div class="row">
+          <div class="col">
+            <input type="text" class="form-control" placeholder="Nombre de la Planificacion" name="txtPlanificacion" required>
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" name="txtAnio" placeholder="Año de la Planificacion" required>
+          </div>
+        </div>
+        <hr>
+        <input type="submit" value="Grabar Planificacion" class="btn btn-success btn-block text-white" />
+        <hr>
+        <div class="row">
+          {%  if messages %}
+            {%  for mensaje in messages %}
+              <h3>{{ mensaje }}</h3>
+            {% endfor %}
+
+          {% endif %}
+
+        </div> 
+        <HR>
+        <div class="row">
+            <table class="table">
+                <tr>
+                    <td><strong>Id </strong></td>
+                    <td><strong>Nombre Planificacion</strong></td>
+                    <td><strong>Usuario</strong></td>
+                    <td><strong>Año de la Planificacion</strong></td>
+                    <td><strong>Fecha Registro</strong></td>
+                </tr>
+                {% for item in JsonTables %}
+                  <tr>
+                      <td>{{ item.id }}</td>
+                      <td>{{ item.nombre }}</td>
+                      <td>{{ item.usuario }}</td>
+                      <td>{{ item.anio }}</td>
+                      <td>{{ item.fecharegistro }}</td>
+
+                  </tr>
+                {% endfor %}
+
+            </table>
+
+        </div>
+      </form>
+
+
+
+{% endblock %}

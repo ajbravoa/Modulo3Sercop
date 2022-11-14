@@ -1,0 +1,38 @@
+{% extends "./base_blog.html" %}
+
+{% block body %}
+        <div class="form-group">
+            <form method="POST" id="frmPost" name="frmPost" action="/grabar_comentario">
+             {% csrf_token %}
+
+                <div class="form_group">
+                    <div class="form-group">
+                        <label for="lblComentario">Ingresa tu comentario</label>
+                        <textarea required class="form-control" name="txtComentario" id="txtComentario" rows="3"></textarea>
+                      </div>
+                    
+                </div>
+                <br>
+                <input type="submit" class="btn btn-lg btn-primary" value="Enviar Comentario" name="btnEnviar" />
+            </form>
+        </div>
+        <hr>
+        <h1 style="text-align: center;" class="mt-5">SECCION DE COMENTARIOS</h1>
+        <HR>
+        <!----COMENTARIOS (Consulta)-->
+    <div>
+        {% for comentario in comentarios %}
+        <div class="row">
+            <h4>
+                {{ comentario.Nombre }} - {{ comentario.FechaCreacion }}
+            </h4>
+
+            <!---PRESENTAMOS EL COMENTARIO-->
+            <p> {{ comentario.Contenido }}   </p>
+
+        </div>
+        {% endfor %}
+        
+    
+</div>
+{% endblock %}

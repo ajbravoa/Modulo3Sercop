@@ -1,0 +1,104 @@
+{% extends "./base.html" %}
+
+{% block title %} Gestión de Cursos {% endblock %}
+
+
+
+{% block body %}
+<div class="row">
+    <!----DIV PARA PRESENTAR MENSAJES-->
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong class="text-dark"> {{ message }}</strong>
+
+
+                </div>
+                {% endfor %}
+            {% endif %}
+         
+        <h2>GESTION DE CURSOS </h2>
+        <div class="card">
+            <div class="card-body">
+                <!---AQUI IRA LA PARTE DEL FORMULARIO DE REGISTRO DE MATERIAS-->
+                <form action="/registrarCurso" method="POST">
+                    {% csrf_token %}
+
+                    <!--CODIGO DE LA MATERIA-->
+                    <div class="form-group">
+                        <input type="text" id="txtCodigo" minlength="6"
+                        maxlength="6" name="txtCodigo" class="form-control" placeholder="INGRESA EL CODIGO DE LA MATERIA" />
+
+                    </div>
+
+                    <!---NOMBRE DE LA MATERIA-->
+                    <div class="form-group">
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="INGRESA EL NOMBRE DE LA MATERIA" />
+
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="txtNumCreditos" name="txtNumCreditos" class="form-control" min="1"  max="9 "
+                        value="1" required pattern="[0-9]+" />
+
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+
+                    </div>
+
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <div class="alert alert-info" role="alert">
+            <h1 style="text-align: center">Listado de Cursos</h1>
+        </div>
+        
+        <div class="table-responsivep py-2">
+            <table id="tabla" class="table table-striped table-bordered table-sm" >
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Código</th>
+                        <th>Nombres</th>
+                        <th>Creditos</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <!---REALIZAMOS EL RECORRIDO DE LOS CURSOS REGISTRADOS-->
+                    {% for c in entity %}
+                    <tr>
+
+                        <td> {{ forloop.counter }} </td>
+                        <td> {{ c.codigo }} </td>
+                        <td> {{ c.nombre }} </td>
+                        <td> {{ c.creditos }} </td>
+                        <td><a href="edicionCurso/{{ c.codigo }}" class="btn btn-info"> Editar </a> </td>
+                        <td><a href="eliminarCurso/{{ c.codigo }}" class="btn btn-danger btnEliminacion"> Eliminar </a> </td>
+
+                    </tr> 
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <hr />
+            <!----AQUI SE COLOCAR EL CODIGO PARA MOSTRAR LOS NUMEROS DEL PAGINEO-->
+            {% include 'paginator.html' %}
+
+        </div>
+
+
+    </div>
+
+
+</div>
+{% endblock %}

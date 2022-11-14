@@ -1,0 +1,23 @@
+{% extends "./base_blog.html" %}
+   
+{% block body %}
+ <div class="bg-light p-5 rounded">
+               
+      <!----AQUI SE PRESENTARAN LOS POSTS-->   
+      <hr>
+      {% for publicacion in post %}
+
+        <h1>{{ publicacion.Titulo }}</h1>
+        <hr>
+        <p class="lead"> {{ publicacion.Contenido | slice:":200" }} </p>
+        <br>
+
+        <a class="btn btn-lg btn-primary" href="{%  url 'post_detalle' publicacion.Id  %}" role="button">Ver mas</a>
+
+      
+      {% endfor %}
+
+                
+ </div>
+
+{% endblock %}
